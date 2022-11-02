@@ -38,38 +38,40 @@ const is_in = (new_v,old_v) => {
 }
 
 const apply_new_varient = (old_v,new_v) =>{
-    let new_dict = {}
+    let new_list = []
     for(const i of new_v)
-        new_dict[uuidv4()] = i;
-    
-    for (let [old_key, old_value] of Object.entries(old_v)) {
+        new_list.push({id:uuidv4(),varient:i,status:"new"});
 
-        for (let [new_key, new_value] of Object.entries(new_dict)) {
+        for (let old_varient_row of old_v){
+            const old_key = old_varient_row.id;
+            const old_value = old_varient_row.varient.split(',');
 
+        for (let new_varient_row of new_list){
+            const new_key = new_varient_row.id;
+            const new_value = new_varient_row.varient;        
             if(is_in(new_value,old_value)){
-                delete new_dict[new_key];
-                new_dict[old_key] = new_value;
+                new_list = new_list.filter((v) => v.id !=new_key )
+                new_list.push({id:old_key,varient:new_value,status:"old"})
                 break;
             }
         }
     }
-    return new_dict;
+    return new_list;
 }
 
 const two_v = permutation(color,size)
 console.log(two_v);
-
-const old_v = {
-"1":[ 'Red', 'Small' ],
-"2":[ 'Red', 'Medium' ],
-"3":[ 'Red', 'Large' ],
-"4":[ 'Green', 'Small' ],
-"5":[ 'Green', 'Medium' ],
-"6":[ 'Green', 'Large' ],
-"7":[ 'Blue', 'Small' ],
-"8":[ 'Blue', 'Medium' ],
-"9":[ 'Blue', 'Large' ]
-}
+const old_v = [
+    {id:"1",varient: 'Red,Small',sku:''},
+    {id:"2",varient: 'Red,Medium',sku:''},
+    {id:"3",varient: 'Red,Large',sku:''},
+    {id:"4",varient: 'Green,Small',sku:''},
+    {id:"5",varient: 'Green,Medium',sku:''},
+    {id:"6",varient: 'Green,Large',sku:''},
+    {id:"7",varient: 'Blue,Small' ,sku:''},
+    {id:"8",varient: 'Blue,Medium',sku:''},
+    {id:"9",varient: 'Blue,Large' ,sku:''}
+    ]
 
 const new_v = permutation(color,size,material);
 console.log(new_v);
