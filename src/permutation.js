@@ -1,7 +1,7 @@
 import {v4 as uuidv4} from 'uuid';
 
-const color = ["Red","Green","Blue"]
-const size = ["Small","Medium"]
+const color = ["Red"]
+const size = ["Small","Medium","Large"]
 const material = ["Plastic","Rubber"]
 
 
@@ -37,35 +37,34 @@ const is_in = (new_v,old_v) => {
     return old_v.filter(n => !new_v.includes(n)) == 0
 }
 
-const apply_new_varient = (old_v,new_v) =>{
-    let new_list = []
-    for(const i of new_v)
-        new_list.push({id:uuidv4(),varient:i,status:"new"});
-
-        for (let old_varient_row of old_v){
-            const old_key = old_varient_row.id;
-            const old_value = old_varient_row.varient;
-            let found_the_old = false
-        for (let new_varient_row of new_list){
-            const new_key = new_varient_row.id;
-            const new_value = new_varient_row.varient;        
-            if(is_in(new_value,old_value)){
-                found_the_old = true
-                new_list = new_list.filter((v) => v.id !=new_key )
-                new_list.push({id:old_key,varient:new_value,status:"old"})
-                break;
+const applyNewVarient = (oldVarientLst,newVarientLst) =>{
+    let newList = [];
+    for(const v of newVarientLst)
+    newList.push({id:uuidv4(),varient:v,status:"new"});
+    
+    let isFoundTheOld = false;
+    
+    for (let oldVarientRow of oldVarientLst){
+        isFoundTheOld = false
+    for (let newVarientRow of newList){
+        if(is_in(newVarientRow.varient,oldVarientRow.varient)){
+            newList = newList.filter((v) => v.id !=newVarientRow.id )
+            newList.push({id:oldVarientRow.id,varient:newVarientRow.varient,status:"old"})
+            isFoundTheOld = true
+            break;
             }
         }
-        if (!found_the_old){
-            new_list.push({id:old_key,varient:old_value,status:"del"})
+    
+    if (!isFoundTheOld){
+        newList.push({id:oldVarientRow.id,varient:oldVarientRow.varient,status:"del"})
         }
     }
-    return new_list;
+    return newList;
 }
 
 const two_v = permutation(color,size)
 console.log(two_v);
-const old_v = [
+const oldVarientLst = [
     {id:"1",varient: [ 'Red', 'Small', 'Plastic' ],sku:''},
     {id:"2",varient: [ 'Red', 'Small', 'Rubber' ],sku:''},
     {id:"3",varient: [ 'Red', 'Medium', 'Plastic' ],sku:''},
@@ -86,8 +85,8 @@ const old_v = [
     {id:"18",varient: [ 'Blue', 'Large', 'Rubber' ],sku:''}
     ]
 
-const new_v = permutation(color,size,material);
-console.log(new_v);
+const newVarientLst = permutation(color,size,material);
+console.log(newVarientLst);
 
-const result = apply_new_varient(old_v,new_v);
+const result = applyNewVarient(oldVarientLst,newVarientLst);
 console.log(result);
