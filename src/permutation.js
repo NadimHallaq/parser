@@ -40,7 +40,7 @@ const is_in = (new_v,old_v) => {
 const apply_new_varient = (old_v,new_v) =>{
     let new_list = []
     for(const i of new_v)
-        new_list.push({id:uuidv4(),varient:i,status:"new",...i});
+        new_list.push({id:uuidv4(),varient:i,status:"new"});
 
         for (let old_varient_row of old_v){
             const old_key = old_varient_row.id;
