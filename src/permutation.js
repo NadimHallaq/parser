@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 
-const color = ["Red"]
+const color = ["Red","Green","Blue"]
 const size = ["Small","Medium","Large"]
 const material = ["Plastic","Rubber"]
 
@@ -34,16 +34,14 @@ else if (a.length == 2) {
 }
 
 const is_in = (new_v,old_v) => {
-    return old_v.filter(n => !new_v.includes(n)) == 0
+    return old_v.filter(n => !new_v.includes(n)).length == 0
 }
 
 const applyNewVarient = (oldVarientLst,newVarientLst) =>{
     let newList = [];
     for(const v of newVarientLst)
     newList.push({id:uuidv4(),varient:v,status:"new"});
-    
     let isFoundTheOld = false;
-    
     for (let oldVarientRow of oldVarientLst){
         isFoundTheOld = false
     for (let newVarientRow of newList){
@@ -54,7 +52,6 @@ const applyNewVarient = (oldVarientLst,newVarientLst) =>{
             break;
             }
         }
-    
     if (!isFoundTheOld){
         newList.push({id:oldVarientRow.id,varient:oldVarientRow.varient,status:"del"})
         }
@@ -63,27 +60,33 @@ const applyNewVarient = (oldVarientLst,newVarientLst) =>{
 }
 
 const two_v = permutation(color,size)
-console.log(two_v);
+//console.log(two_v);
 const oldVarientLst = [
-    {id:"1",varient: [ 'Red', 'Small', 'Plastic' ],sku:''},
-    {id:"2",varient: [ 'Red', 'Small', 'Rubber' ],sku:''},
-    {id:"3",varient: [ 'Red', 'Medium', 'Plastic' ],sku:''},
-    {id:"4",varient: [ 'Red', 'Medium', 'Rubber' ],sku:''},
-    {id:"5",varient: [ 'Red', 'Large', 'Plastic' ],sku:''},
-    {id:"6",varient: [ 'Red', 'Large', 'Rubber' ],sku:''},
-    {id:"7",varient: [ 'Green', 'Small', 'Plastic' ] ,sku:''},
-    {id:"8",varient: [ 'Green', 'Small', 'Rubber' ],sku:''},
-    {id:"9",varient: [ 'Green', 'Medium', 'Plastic' ] ,sku:''},
-    {id:"10",varient: [ 'Green', 'Medium', 'Rubber' ],sku:''},
-    {id:"11",varient: [ 'Green', 'Large', 'Plastic' ],sku:''},
-    {id:"12",varient: [ 'Green', 'Large', 'Rubber' ],sku:''},
-    {id:"13",varient: [ 'Blue', 'Small', 'Plastic' ],sku:''},
-    {id:"14",varient: [ 'Blue', 'Small', 'Rubber' ],sku:''},
-    {id:"15",varient: [ 'Blue', 'Medium', 'Plastic' ],sku:''},
-    {id:"16",varient: [ 'Blue', 'Medium', 'Rubber' ],sku:''},
-    {id:"17",varient: [ 'Blue', 'Large', 'Plastic' ],sku:''},
-    {id:"18",varient: [ 'Blue', 'Large', 'Rubber' ],sku:''}
+    {id:"1",varient: [ 'Red'],sku:''},
+    {id:"2",varient: [ 'Green'] ,sku:''},
+    {id:"3",varient: [ 'Blue'],sku:''},
     ]
+
+// const oldVarientLst = [
+//     {id:"1",varient: [ 'Red', 'Small', 'Plastic' ],sku:''},
+//     {id:"2",varient: [ 'Red', 'Small', 'Rubber' ],sku:''},
+//     {id:"3",varient: [ 'Red', 'Medium', 'Plastic' ],sku:''},
+//     {id:"4",varient: [ 'Red', 'Medium', 'Rubber' ],sku:''},
+//     {id:"5",varient: [ 'Red', 'Large', 'Plastic' ],sku:''},
+//     {id:"6",varient: [ 'Red', 'Large', 'Rubber' ],sku:''},
+//     {id:"7",varient: [ 'Green', 'Small', 'Plastic' ] ,sku:''},
+//     {id:"8",varient: [ 'Green', 'Small', 'Rubber' ],sku:''},
+//     {id:"9",varient: [ 'Green', 'Medium', 'Plastic' ] ,sku:''},
+//     {id:"10",varient: [ 'Green', 'Medium', 'Rubber' ],sku:''},
+//     {id:"11",varient: [ 'Green', 'Large', 'Plastic' ],sku:''},
+//     {id:"12",varient: [ 'Green', 'Large', 'Rubber' ],sku:''},
+//     {id:"13",varient: [ 'Blue', 'Small', 'Plastic' ],sku:''},
+//     {id:"14",varient: [ 'Blue', 'Small', 'Rubber' ],sku:''},
+//     {id:"15",varient: [ 'Blue', 'Medium', 'Plastic' ],sku:''},
+//     {id:"16",varient: [ 'Blue', 'Medium', 'Rubber' ],sku:''},
+//     {id:"17",varient: [ 'Blue', 'Large', 'Plastic' ],sku:''},
+//     {id:"18",varient: [ 'Blue', 'Large', 'Rubber' ],sku:''}
+//     ]
 
 const newVarientLst = permutation(color,size,material);
 console.log(newVarientLst);
